@@ -1,3 +1,3 @@
 # aso
 
-stackoverflow cli tool
+stackoverflow cli tool in rust
