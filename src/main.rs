@@ -8,7 +8,7 @@ use tui::{
     backend::{ Backend, CrosstermBackend },
     style::{ Color, Modifier, Style },
     text::{ Span, Spans },
-    widgets::{ Block, Borders, List, ListItem, ListState, Paragraph },
+    widgets::{ List, ListItem, ListState, Paragraph },
     Frame,
     Terminal,
 };
@@ -17,6 +17,7 @@ use chrono::{ TimeZone, Utc };
 use html2text::from_read;
 use tui::widgets::Wrap;
 use tui::text::{ Text };
+use tui::layout::{ Constraint, Direction, Layout };
 
 #[derive(serde::Deserialize)]
 struct QuestionsResponse {
@@ -31,6 +32,7 @@ struct Question {
     creation_date: u64,
     answer_count: u32,
     owner: Owner,
+    link: String,
 }
 
 #[derive(serde::Deserialize)]
@@ -63,16 +65,18 @@ struct AnswersView {
 
 struct App {
     items: Vec<Question>,
+    query: String,
     state: ListState,
     mode: Mode,
 }
 
 impl App {
-    fn new(items: Vec<Question>) -> App {
+    fn new(items: Vec<Question>, query: String) -> App {
         let mut state = ListState::default();
         state.select(Some(0));
         App {
             items,
+            query,
             state,
             mode: Mode::Questions,
         }
@@ -189,7 +193,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut terminal = Terminal::new(backend)?;
 
     let tick_rate = Duration::from_millis(200);
-    let app = App::new(items);
+    let app = App::new(items, query.clone());
     let res = run_app(&mut terminal, app, tick_rate);
 
     disable_raw_mode()?;
@@ -214,8 +218,11 @@ fn fetch_stackoverflow_questions(query: &str) -> Result<Vec<Question>, Box<dyn E
 
     if !resp.status().is_success() {
         return Err(
-            format!("Request failed with status: {}\n{}", resp.status()).into(),
-            resp.text()?
+            format!(
+                "Request failed with status: {}\n{}",
+                resp.status(),
+                resp.text().unwrap_or_default()
+            ).into()
         );
     }
 
@@ -236,8 +243,11 @@ fn fetch_stackoverflow_answers(question_id: u32) -> Result<Vec<Answer>, Box<dyn 
 
     if !resp.status().is_success() {
         return Err(
-            format!("Request failed with status: {}\n{}", resp.status()).into(),
-            resp.text()?
+            format!(
+                "Request failed with status: {}\n{}",
+                resp.status(),
+                resp.text().unwrap_or_default()
+            ).into()
         );
     }
 
@@ -316,32 +326,19 @@ fn timestamp_to_elapsed(timestamp: i64) -> String {
     }
 }
 
-fn parse_html_to_spans<'a>(html: &'a str, wrap_width: usize, prefix: Span<'a>) -> Vec<Spans<'a>> {
-    let text = from_read(html.as_bytes(), wrap_width);
-
-    text.lines()
-        .map(|line| { Spans::from(vec![prefix.clone(), Span::raw(line.to_string())]) })
-        .collect()
-}
-
 fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
     let full_area = f.size();
 
     match &app.mode {
         Mode::Questions => {
-            let block = Block::default()
-                .title("Questions")
-                .borders(Borders::ALL)
-                .style(Style::default().fg(Color::White));
-
             let items: Vec<ListItem> = app.items
                 .iter()
                 .enumerate()
                 .map(|(index, i)| {
                     let number_width = (index + 1).to_string().len() + 2;
-                    let available_width = (full_area.width as usize) - number_width - 4;
+                    let available_width = (full_area.width as usize) - number_width;
                     let title = from_read(i.title.as_bytes(), available_width);
-                    let truncated_title = if title.len() > available_width {
+                    let truncated_title = if title.len() > available_width + 2 {
                         format!("{}...", &title[..available_width - 3])
                     } else {
                         title
@@ -374,7 +371,6 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
 
                     let info_span = Spans::from(
                         vec![
-                            // space with then len of index+2
                             Span::styled(
                                 " ".repeat(number_width),
                                 Style::default().fg(Color::White)
@@ -393,22 +389,41 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
                 })
                 .collect();
 
+            let chunks = Layout::default()
+                .direction(Direction::Vertical)
+                .constraints([Constraint::Length(2), Constraint::Min(0)])
+                .split(full_area);
+
+            let query_paragraph = Paragraph::new(
+                Span::styled(
+                    format!("Results for: {}", app.query),
+                    Style::default().add_modifier(Modifier::BOLD)
+                )
+            ).style(Style::default().fg(Color::White));
+
+            f.render_widget(query_paragraph, chunks[0]);
+
             let list = List::new(items)
-                .block(block)
                 .style(Style::default().fg(Color::White))
                 .highlight_symbol("> ");
-            f.render_stateful_widget(list, full_area, &mut app.state);
+
+            f.render_stateful_widget(list, chunks[1], &mut app.state);
         }
 
         Mode::Answers(answers) => {
             let available_width = (full_area.width as usize) - 4;
-            let block = Block::default().title("Answers").borders(Borders::ALL);
 
             let mut lines: Vec<Spans> = vec![
                 Spans::from(
                     Span::styled(
                         from_read(answers.question.title.as_bytes(), available_width),
                         Style::default().add_modifier(Modifier::BOLD)
+                    )
+                ),
+                Spans::from(
+                    Span::styled(
+                        answers.question.link.clone(),
+                        Style::default().fg(Color::LightBlue)
                     )
                 ),
                 Spans::from(""),
@@ -428,10 +443,16 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
             ];
 
             let wrap_width = full_area.width.saturating_sub(4) as usize;
-            let q_prefix = Span::styled("│ ", Style::default().fg(Color::LightYellow));
-            let a_prefix = Span::styled("│ ", Style::default().fg(Color::LightGreen));
-
-            lines.extend(parse_html_to_spans(&answers.question.body, wrap_width, q_prefix.clone()));
+            lines.push(
+                Spans::from(
+                    Span::styled("─".repeat(wrap_width), Style::default().fg(Color::LightYellow))
+                )
+            );
+            lines.extend(
+                from_read(answers.question.body.as_bytes(), wrap_width)
+                    .lines()
+                    .map(|line| Spans::from(Span::raw(line.to_string())))
+            );
             lines.push(Spans::from(""));
 
             for answer in &answers.answers {
@@ -450,13 +471,21 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
                         ]
                     )
                 );
-                lines.extend(parse_html_to_spans(&answer.body, wrap_width, a_prefix.clone()));
+                lines.push(
+                    Spans::from(
+                        Span::styled("─".repeat(wrap_width), Style::default().fg(Color::LightGreen))
+                    )
+                );
+                lines.extend(
+                    from_read(answer.body.as_bytes(), wrap_width)
+                        .lines()
+                        .map(|line| Spans::from(Span::raw(line.to_string())))
+                );
 
                 lines.push(Spans::from(""));
             }
 
             let paragraph = Paragraph::new(Text::from(lines))
-                .block(block)
                 .style(Style::default().fg(Color::White))
                 .scroll((answers.scroll, 0))
                 .wrap(Wrap { trim: false });
