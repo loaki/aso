@@ -1,1 +1,1 @@
-/home/loaki/Documents/perso/aso/target/debug/aso: /home/loaki/Documents/perso/aso/src/main.rs
+/home/loaki/Documents/perso/aso/target/debug/aso: /home/loaki/Documents/perso/aso/src/api.rs /home/loaki/Documents/perso/aso/src/app.rs /home/loaki/Documents/perso/aso/src/main.rs /home/loaki/Documents/perso/aso/src/models.rs /home/loaki/Documents/perso/aso/src/ui.rs /home/loaki/Documents/perso/aso/src/utils.rs
