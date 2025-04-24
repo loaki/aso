@@ -1,0 +1,11 @@
+/home/loaki/Documents/perso/aso/target/debug/deps/libcopypasta-8b345e27e85afa6e.rmeta: /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/lib.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/common.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/wayland_clipboard.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/x11_clipboard.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/nop_clipboard.rs
+
+/home/loaki/Documents/perso/aso/target/debug/deps/libcopypasta-8b345e27e85afa6e.rlib: /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/lib.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/common.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/wayland_clipboard.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/x11_clipboard.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/nop_clipboard.rs
+
+/home/loaki/Documents/perso/aso/target/debug/deps/copypasta-8b345e27e85afa6e.d: /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/lib.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/common.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/wayland_clipboard.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/x11_clipboard.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/nop_clipboard.rs
+
+/home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/lib.rs:
+/home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/common.rs:
+/home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/wayland_clipboard.rs:
+/home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/x11_clipboard.rs:
+/home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/copypasta-0.8.2/src/nop_clipboard.rs:

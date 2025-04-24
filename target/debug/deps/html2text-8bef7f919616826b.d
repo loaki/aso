@@ -1,0 +1,11 @@
+/home/loaki/Documents/perso/aso/target/debug/deps/libhtml2text-8bef7f919616826b.rmeta: /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/lib.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/macros.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/render/mod.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/render/text_renderer.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/markup5ever_rcdom.rs
+
+/home/loaki/Documents/perso/aso/target/debug/deps/libhtml2text-8bef7f919616826b.rlib: /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/lib.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/macros.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/render/mod.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/render/text_renderer.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/markup5ever_rcdom.rs
+
+/home/loaki/Documents/perso/aso/target/debug/deps/html2text-8bef7f919616826b.d: /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/lib.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/macros.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/render/mod.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/render/text_renderer.rs /home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/markup5ever_rcdom.rs
+
+/home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/lib.rs:
+/home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/macros.rs:
+/home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/render/mod.rs:
+/home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/render/text_renderer.rs:
+/home/loaki/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/html2text-0.4.5/src/markup5ever_rcdom.rs:
